@@ -12,8 +12,8 @@ class GameTable extends React.Component {
       for (let j = 0; j < colNum; j++) {
         fields.push(
           <Field 
-            x={j*50} 
-            y={i*50} 
+            x={j} 
+            y={i} 
             key={i+'_'+j} 
           />
         )
