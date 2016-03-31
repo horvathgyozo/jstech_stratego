@@ -9,7 +9,7 @@ class Piece extends React.Component {
       <div 
         className="piece" 
         style={style}
-        onClick={() => this.props.onClick({
+        onClick={() => this.props.actions.selectSoldier({
           x: this.props.x,
           y: this.props.y,
           id: this.props.id,

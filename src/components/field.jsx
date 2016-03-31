@@ -9,7 +9,14 @@ class Field extends React.Component {
     };
     
     return (
-      <div className="field" style={style}></div>
+      <div 
+        className="field" 
+        style={style}
+        onClick={() => this.props.actions.selectField({
+          x: this.props.x,
+          y: this.props.y,
+        })}
+      ></div>
     );
   }
 }

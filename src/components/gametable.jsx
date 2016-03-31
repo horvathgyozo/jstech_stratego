@@ -15,6 +15,7 @@ class GameTable extends React.Component {
             x={j} 
             y={i} 
             key={i+'_'+j} 
+            actions={this.props.actions}
           />
         )
       }
@@ -26,7 +27,7 @@ class GameTable extends React.Component {
         y={soldier.y}
         id={soldier.id}
         key={soldier.id}
-        onClick={this.props.onPieceClick}
+        actions={this.props.actions}
       />
     );
     
