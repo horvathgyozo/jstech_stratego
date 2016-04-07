@@ -2,12 +2,14 @@ const initialState = {
   colNum: 5,
   rowNum: 6,
   soldiers: [
-    { id: 'r1',   x: 0, y: 0 },
-    { id: 'r5_1', x: 2, y: 2 },
-    { id: 'r8_2', x: 3, y: 2 },
+    { id: 'r1',   x: 0, y: 0, value: 1, color: 'red' },
+    { id: 'r5_1', x: 2, y: 2, value: 2, color: 'red' },
+    { id: 'r8_2', x: 3, y: 2, value: 8, color: 'red' },
+    { id: 'b8_1', x: 1, y: 3, value: 8, color: 'blue' },
   ],
   gameState: 'SELECTING',
   selected: false,
+  playerToTurn: 'red',
 };
 
 export default function reducer(state = initialState, action) {
@@ -16,11 +18,21 @@ export default function reducer(state = initialState, action) {
       return selectSoldier(state, action.payload);
     case 'SELECT_FIELD':
       return selectField(state, action.payload);
+    case 'END_MOVING':
+      return endMoving(state, action.payload);
   }
   return state;
 }
 
 function selectSoldier(state, selectedSoldier) {
+  if (state.gameState === 'MOVING') {
+    return state;
+  }
+  
+  if (selectedSoldier.color !== state.playerToTurn) {
+    return state;
+  }
+  
   const newState = copy(state);
   
   newState.gameState = 'SELECTED';
@@ -35,7 +47,7 @@ function selectField(state, {x, y}) {
   }
   
   const newState = copy(state);
-  newState.gameState = 'SELECTING';
+  newState.gameState = 'MOVING';
   
   for (const s of newState.soldiers) {
     if (s.id === newState.selected.id) {
@@ -45,6 +57,18 @@ function selectField(state, {x, y}) {
     }
   }
   
+  return newState;
+}
+
+function endMoving(state) {
+  if (state.gameState !== 'MOVING') {
+    return state;
+  }
+  
+  const newState = copy(state);
+  newState.gameState = 'SELECTING';
+  newState.selected = false;
+  newState.playerToTurn = newState.playerToTurn === 'red' ? 'blue' : 'red';
   return newState;
 }
 
@@ -111,8 +135,8 @@ export function getValidFields(state, x, y) {
     }
     
     let good = true;
-    let maxRow = state.dimensions.height;
-    let maxCol = state.dimensions.width;
+    let maxRow = state.rowNum;
+    let maxCol = state.colNum;
     
     // console.log(row, col);
     good = good && row >= 0 && row <= maxRow-1 && col >= 0 && col <= maxCol-1;
@@ -157,8 +181,8 @@ export function getValidFields(state, x, y) {
   
   if (soldier) {
   
-    for (let i = 0; i < state.dimensions.height; i++) {
-      for (let j = 0; j < state.dimensions.width; j++) {
+    for (let i = 0; i < state.rowNum; i++) {
+      for (let j = 0; j < state.colNum; j++) {
         if (goodField(i, j, y, x, distance[soldier.soldier.value])) {
           validFields.push({x: j, y: i});
         }

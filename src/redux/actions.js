@@ -11,3 +11,10 @@ export function selectField(selectedField) {
     payload: selectedField,
   };
 }
+
+export function endMoving() {
+  return {
+    type: 'END_MOVING',
+    payload: null,
+  };
+}

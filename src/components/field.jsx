@@ -5,7 +5,8 @@ class Field extends React.Component {
     // console.log(this.props)
     
     const style = {
-      transform: `translate3d(${this.props.x * 50}px,${this.props.y * 50}px,0px)`      
+      transform: `translate3d(${this.props.x * 50}px,${this.props.y * 50}px,0px)`,
+      backgroundColor: this.props.highlighted ? 'orange' : '',      
     };
     
     return (

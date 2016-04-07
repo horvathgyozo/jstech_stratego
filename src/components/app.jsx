@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../redux/actions';
+import { getValidFields } from '../redux/index';
 import GameTable from './gametable';
 
 class App extends React.Component {
@@ -11,10 +12,12 @@ class App extends React.Component {
       <div>
         <p>{this.props.gameState}</p>
         <GameTable 
+          {...this.props}
           colNum={this.props.colNum}
           rowNum={this.props.rowNum}
           soldiers={this.props.soldiers}
           actions={this.props.actions}
+          selected={this.props.selected}
         />   
       </div>   
     );
@@ -27,4 +30,13 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(state => state, mapDispatchToProps)(App);
+function mapStateToProps(state) {
+  return {
+    ...state,
+    validFields: state.selected
+      ? getValidFields(state, state.selected.x, state.selected.y)
+      : false
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

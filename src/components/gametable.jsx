@@ -16,6 +16,9 @@ class GameTable extends React.Component {
             y={i} 
             key={i+'_'+j} 
             actions={this.props.actions}
+            highlighted={this.props.validFields && 
+              this.props.validFields.some(f => f.x === j && f.y === i)
+            }
           />
         )
       }
@@ -28,6 +31,12 @@ class GameTable extends React.Component {
         id={soldier.id}
         key={soldier.id}
         actions={this.props.actions}
+        selected={this.props.selected 
+          ? this.props.selected.id === soldier.id 
+          : false 
+        }
+        value={soldier.value}
+        color={soldier.color}
       />
     );
     

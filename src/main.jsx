@@ -9,7 +9,9 @@ import { Provider } from 'react-redux';
 import reducer from './redux/index';
 // import {selectSoldier} from './redux/actions';
 
-let store = createStore(reducer);
+let store = createStore(reducer,
+  window.devToolsExtension ? window.devToolsExtension() : undefined
+);
 
 // console.log( store.getState() );
 
