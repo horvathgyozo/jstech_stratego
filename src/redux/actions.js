@@ -18,3 +18,9 @@ export function endMoving() {
     payload: null,
   };
 }
+
+export function startPublicGame() {
+  return {
+    type: 'START_PUBLIC_GAME',
+  };
+}

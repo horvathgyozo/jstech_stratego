@@ -1,4 +1,7 @@
 const initialState = {
+  application: {
+    page: 'index',
+  }, 
   colNum: 5,
   rowNum: 6,
   soldiers: [
@@ -20,6 +23,9 @@ export default function reducer(state = initialState, action) {
       return selectField(state, action.payload);
     case 'END_MOVING':
       return endMoving(state, action.payload);
+    case 'START_PUBLIC_GAME':
+      return startPublicGame(state);
+    
   }
   return state;
 }
@@ -192,4 +198,12 @@ export function getValidFields(state, x, y) {
   }
   
   return validFields;
+}
+
+function startPublicGame(state) {
+  var newState = copy(state);
+  
+  newState.application.page = 'game';
+  
+  return newState;
 }
