@@ -6,6 +6,10 @@ import { getValidFields } from '../redux/index';
 import GameTable from './gametable';
 
 class GamePage extends React.Component {
+  componentDidMount() {
+    // console.log('jointhegame')
+    this.props.actions.joinTheGame();
+  }
   render() {
     console.log(this.props)
     return (

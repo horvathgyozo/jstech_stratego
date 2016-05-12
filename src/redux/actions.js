@@ -24,3 +24,25 @@ export function startPublicGame() {
     type: 'START_PUBLIC_GAME',
   };
 }
+
+export function joinTheGame() {
+  return {
+    type: 'JOIN_THE_GAME',
+    meta: {
+      remote: true,
+    }
+  };
+}
+
+export function joinedTheGame(serverData) {
+  return {
+    type: 'JOINED_THE_GAME',
+    payload: serverData,
+  };
+}
+
+export function startTheGame() {
+  return {
+    type: 'START_THE_GAME',
+  };
+}

@@ -25,7 +25,12 @@ export default function reducer(state = initialState, action) {
       return endMoving(state, action.payload);
     case 'START_PUBLIC_GAME':
       return startPublicGame(state);
-    
+    case 'JOIN_THE_GAME':
+      return joinTheGame(state);
+    case 'JOINED_THE_GAME':
+      return joinedTheGame(state, action.payload);
+    case 'START_THE_GAME':
+      return startTheGame(state);
   }
   return state;
 }
@@ -202,8 +207,27 @@ export function getValidFields(state, x, y) {
 
 function startPublicGame(state) {
   var newState = copy(state);
-  
   newState.application.page = 'game';
-  
+  return newState;
+}
+
+function joinTheGame(state) {
+  var newState = copy(state);
+  newState.gameState = 'JOINING';
+  return newState;
+}
+
+function joinedTheGame(state, data) {
+  var newState = copy(state);
+  newState.gameState = 'JOINED';
+  newState.player = data.color;
+  newState.playerId = data.playerId;
+  newState.gameId = data.gameId;
+  return newState;
+}
+
+function startTheGame(state) {
+  var newState = copy(state);
+  newState.gameState = 'SELECTING';
   return newState;
 }
